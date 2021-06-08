@@ -1,0 +1,28 @@
+.bg-dark {
+    background-color: whitesmoke;
+}
+
+.form-control {
+    margin-bottom: 10px;
+}
+
+.card-title, .card-img-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 7vw;
+}
+
+.card, .btn {
+    box-shadow: -3px -3px 6px grey;
+}
+
+#headerBG {
+    margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 575px) {
+    #cityBtn {
+        display: none;
+    }
+}
