@@ -6,6 +6,10 @@
     margin-bottom: 10px;
 }
 
+#searchedCity {
+    display: flex;
+    align-items: center;
+}
 .card-title, .card-img-overlay {
     display: flex;
     justify-content: center;
