@@ -14,11 +14,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 7vw;
+    font-size: 6vw;
 }
 
 .card, .btn {
     box-shadow: -3px -3px 6px grey;
+}
+
+.card-body h5 {
+    font-size: 2vw;
+}
+
+.card-body p {
+    margin-bottom: 0;
 }
 
 #headerBG {
