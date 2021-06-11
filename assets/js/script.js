@@ -70,8 +70,6 @@ for (i = 0; i < 8; i++) {
         citySearchBtns[i].style.display = "flex";
     };
 };
-// https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
-// api key= bd6680cf3156c36b1545c11999cd572c
 
 var saveCityHist = function(city) {
     searchedCityHist.unshift(city);
@@ -92,7 +90,7 @@ let LatLong;
 var DOMUpdate = function(openwmResponse, city) {
     // current city weather - currnet time
     searchedCity.textContent = city + " - " + moment().format('MM/DD/YY, h:mm a');
-    searchedCityIcon.setAttribute("src", "http://openweathermap.org/img/wn/" + openwmResponse.current.weather[0].icon + "@2x.png");
+    searchedCityIcon.setAttribute("src", "https://openweathermap.org/img/wn/" + openwmResponse.current.weather[0].icon + "@2x.png");
     searchedInfo1.textContent = "Temp: " + openwmResponse.current.temp + "°F | Feels like: " + openwmResponse.current.feels_like + "°F";
     searchedInfo2.textContent = "Humidity: " + openwmResponse.current.humidity + "%";
     searchedInfo3.textContent = "Wind: " + openwmResponse.current.wind_speed + "mph";
@@ -163,7 +161,7 @@ currentLoc();
 
 var searchCity = function(city) {
             fetch (
-            `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=bd6680cf3156c36b1545c11999cd572c`
+            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=bd6680cf3156c36b1545c11999cd572c`
         )
         .then(function(openwmResponse) {
             return openwmResponse.json();
