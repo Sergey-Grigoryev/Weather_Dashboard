@@ -63,9 +63,7 @@ var citySearchBtns = [citySearchBtn1, citySearchBtn2, citySearchBtn3, citySearch
 
 for (i = 0; i < 8; i++) {
     searchedCityHist.push(localStorage.getItem(i));
-};
-for (i = 0; i < 8; i++) {
-    if (searchedCityHist[i] !== 'null') {
+    if (searchedCityHist[i] !== 'undefined') {
         citySearchBtns[i].textContent = searchedCityHist[i];
         citySearchBtns[i].style.display = "flex";
     };
@@ -79,7 +77,8 @@ var saveCityHist = function(city) {
     localStorage.clear();
     for (i = 0; i < 8; i++) {
         localStorage.setItem(i, searchedCityHist[i]);
-        if (searchedCityHist[i] !== 'null') {
+        console.log(searchedCityHist);
+        if (searchedCityHist[i] !== 'undefined') {
             citySearchBtns[i].textContent = searchedCityHist[i];
             citySearchBtns[i].style.display = "flex";
         }
