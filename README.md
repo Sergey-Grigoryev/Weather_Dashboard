@@ -9,7 +9,6 @@
 * JavaScrip
 * Server-side API (openweathermap & ipwhois.app)
 
-<<<<<<< HEAD
 ![Screenshot of site](./assets/imgs/Screenshot.png)
 
 ### Functions: 
