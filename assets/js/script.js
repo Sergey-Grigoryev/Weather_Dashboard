@@ -77,7 +77,6 @@ var saveCityHist = function(city) {
     localStorage.clear();
     for (i = 0; i < 8; i++) {
         localStorage.setItem(i, searchedCityHist[i]);
-        console.log(searchedCityHist);
         if (searchedCityHist[i] !== 'undefined') {
             citySearchBtns[i].textContent = searchedCityHist[i];
             citySearchBtns[i].style.display = "flex";
@@ -151,7 +150,6 @@ function currentLoc() {
         })
         .then(function(openwmResponse) {
             DOMUpdate(openwmResponse, LatLong.city);
-            console.log(openwmResponse);
         })
     })
 };
@@ -166,11 +164,9 @@ var searchCity = function(city) {
             return openwmResponse.json();
         })
         .then(function(openwmResponse) {
-            console.log(openwmResponse);
             let cityLat = openwmResponse.coord.lat;
             let cityLong = openwmResponse.coord.lon;
             let cityDisplay = openwmResponse.name;
-            console.log(cityLat, cityLong);
             fetch (
                 `https://api.openweathermap.org/data/2.5/onecall?lat=${cityLat}&lon=${cityLong}&units=imperial&appid=bd6680cf3156c36b1545c11999cd572c`
             )
@@ -178,7 +174,6 @@ var searchCity = function(city) {
                 return openwmResponse.json();
             })
             .then(function(openwmResponse) {
-                console.log(openwmResponse);
                 DOMUpdate(openwmResponse, cityDisplay);
                 saveCityHist(cityDisplay);
                 // searchedCityHistBtns.appendChild(document.createElement("BUTTON"));
