@@ -9,7 +9,7 @@
 * JavaScrip
 * Server-side API (openweathermap & ipwhois.app)
 
-![Screenshot of site](./assets/imgs/Screenshot 2021-06-11 145748.png)
+![Screenshot of site](.\assets\imgs\Screenshot 2021-06-11 145748.png)
 
 ### Functions: 
 * API fetchs lon/lat of user's current locatin using IP address.
