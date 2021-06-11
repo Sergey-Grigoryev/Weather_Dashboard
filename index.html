@@ -25,6 +25,7 @@
           <h1 class="card-title">Weather Dashboard</h1>
         </div>
     </div>
+
 <!-- Left side - Search and common city buttons -->
     <div class="container">
         <div class="row">
@@ -34,17 +35,18 @@
                 <div class="d-grid gap-2">
                     <button class="btn btn-primary" id="citySearchBtn" type="button">Search</button>
                     <hr class="solid">
-                    <button class="btn btn-info" type="button" id="NYcityBtn">New York</button>
-                    <button class="btn btn-info" type="button" id="LAcityBtn">Los Angeles</button>
-                    <button class="btn btn-info" type="button" id="CHcityBtn">Chicago</button>
-                    <button class="btn btn-info" type="button" id="PHcityBtn">Philadelphia</button>
-                    <button class="btn btn-info" type="button" id="HOcityBtn">Houston</button>
-                    <button class="btn btn-info" type="button" id="TOcityBtn">Toronto</button>
-                    <button class="btn btn-info" type="button" id="BOcityBtn">Boston</button>
-                    <button class="btn btn-info" type="button" id="SFcityBtn">San Fransico</button>
+                    <div id="searchedCityHistBtns"></div>
+                    <button class="btn btn-info" type="button" id="citySearchBtn1"></button>
+                    <button class="btn btn-info" type="button" id="citySearchBtn2"></button>
+                    <button class="btn btn-info" type="button" id="citySearchBtn3"></button>
+                    <button class="btn btn-info" type="button" id="citySearchBtn4"></button>
+                    <button class="btn btn-info" type="button" id="citySearchBtn5"></button>
+                    <button class="btn btn-info" type="button" id="citySearchBtn6"></button>
+                    <button class="btn btn-info" type="button" id="citySearchBtn7"></button>
+                    <button class="btn btn-info" type="button" id="citySearchBtn8"></button>
                 </div>
-<!-- Right side - city forcast and 5-day forcast -->
             </div>
+<!-- Right side - city forcast and 5-day forcast -->
             <div class="col-sm-9">
                 <div class="card mb-3">
                     <div class="row g-0">
@@ -55,7 +57,7 @@
                           <p class="card-text" id="searchedInfo1"></p>
                           <p class="card-text" id="searchedInfo2"></p>
                           <p class="card-text" id="searchedInfo3"></p>
-                          <p class="card-text"><small class="text-muted" id="searchedInfoSm"></small></p>
+                          <p class="card-text"><small class="text-muted" id="searchedInfoSm"></small><span><img id="uvImg" src="" height="50px"></span></p>
                         </div>
                       </div>
                     </div>
@@ -109,7 +111,7 @@
                       </div>
                       <div class="col">
                         <div class="card">
-                          <div class="card-body gap-0">
+                          <div class="card-body">
                             <h5 class="card-text" id="day5Date"></h5>
                             <p class="card-text" id="day5Text1"></p>
                             <p class="card-text" id="day5Text2"></p>
@@ -122,6 +124,7 @@
             </div>
         </div>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./assets/js/script.js"></script>

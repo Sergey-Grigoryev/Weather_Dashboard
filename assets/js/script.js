@@ -1,12 +1,12 @@
-// Common City buttons
-var NYcityBtn = document.querySelector("#NYcityBtn");
-var LAcityBtn = document.querySelector("#LAcityBtn");
-var CHcityBtn = document.querySelector("#CHcityBtn");
-var PHcityBtn = document.querySelector("#PHcityBtn");
-var HOcityBtn = document.querySelector("#HOcityBtn");
-var TOcityBtn = document.querySelector("#TOcityBtn");
-var BOcityBtn = document.querySelector("#BOcityBtn");
-var SFcityBtn = document.querySelector("#SFcityBtn");
+// History City buttons
+var citySearchBtn1 = document.querySelector("#citySearchBtn1");
+var citySearchBtn2 = document.querySelector("#citySearchBtn2");
+var citySearchBtn3 = document.querySelector("#citySearchBtn3");
+var citySearchBtn4 = document.querySelector("#citySearchBtn4");
+var citySearchBtn5 = document.querySelector("#citySearchBtn5");
+var citySearchBtn6 = document.querySelector("#citySearchBtn6");
+var citySearchBtn7 = document.querySelector("#citySearchBtn7");
+var citySearchBtn8 = document.querySelector("#citySearchBtn8");
 
 // 5 day forcast cards
 var day1Date = document.querySelector("#day1Date");
@@ -47,20 +47,56 @@ var searchedInfo1 = document.querySelector("#searchedInfo1");
 var searchedInfo2 = document.querySelector("#searchedInfo2");
 var searchedInfo3 = document.querySelector("#searchedInfo3");
 var searchedInfoSm = document.querySelector("#searchedInfoSm");
+var uvImg = document.querySelector("#uvImg");
 
+// Searched City History
+var searchedCityHist = [];
+citySearchBtn1.style.display = "none";
+citySearchBtn2.style.display = "none";
+citySearchBtn3.style.display = "none";
+citySearchBtn4.style.display = "none";
+citySearchBtn5.style.display = "none";
+citySearchBtn6.style.display = "none";
+citySearchBtn7.style.display = "none";
+citySearchBtn8.style.display = "none";
+var citySearchBtns = [citySearchBtn1, citySearchBtn2, citySearchBtn3, citySearchBtn4, citySearchBtn5, citySearchBtn6, citySearchBtn7, citySearchBtn8]
+
+for (i = 0; i < 8; i++) {
+    searchedCityHist.push(localStorage.getItem(i));
+};
+for (i = 0; i < 8; i++) {
+    if (searchedCityHist[i] !== 'null') {
+        citySearchBtns[i].textContent = searchedCityHist[i];
+        citySearchBtns[i].style.display = "flex";
+    };
+};
 // https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
 // api key= bd6680cf3156c36b1545c11999cd572c
 
-let LatLong;
+var saveCityHist = function(city) {
+    searchedCityHist.unshift(city);
+    if (searchedCityHist.length === 9) {
+        searchedCityHist.pop();
+    };
+    localStorage.clear();
+    for (i = 0; i < 8; i++) {
+        localStorage.setItem(i, searchedCityHist[i]);
+        if (searchedCityHist[i] !== 'null') {
+            citySearchBtns[i].textContent = searchedCityHist[i];
+            citySearchBtns[i].style.display = "flex";
+        }
+    }
+};
 
-var DOMUpdate = function(openwmResponse) {
+let LatLong;
+var DOMUpdate = function(openwmResponse, city) {
     // current city weather - currnet time
-    searchedCity.textContent = LatLong.city + " - " + moment().format('MM/DD/YY, h:mm a');
+    searchedCity.textContent = city + " - " + moment().format('MM/DD/YY, h:mm a');
     searchedCityIcon.setAttribute("src", "http://openweathermap.org/img/wn/" + openwmResponse.current.weather[0].icon + "@2x.png");
     searchedInfo1.textContent = "Temp: " + openwmResponse.current.temp + "°F | Feels like: " + openwmResponse.current.feels_like + "°F";
     searchedInfo2.textContent = "Humidity: " + openwmResponse.current.humidity + "%";
     searchedInfo3.textContent = "Wind: " + openwmResponse.current.wind_speed + "mph";
-    searchedInfoSm.textContent = "Sunrise: " + moment.unix(openwmResponse.current.sunrise).format("hh:mm") + " am  |  Sunset: " + moment.unix(openwmResponse.current.sunset).format("hh:mm") + " pm";
+    searchedInfoSm.textContent = "Sunrise: " + moment.unix(openwmResponse.current.sunrise).format("hh:mm") + " am | Sunset: " + moment.unix(openwmResponse.current.sunset).format("hh:mm") + " pm | UV Index: " + openwmResponse.current.uvi;
     // 5 day forcast - current city
     day1Date.textContent = moment().add(1, 'days').format('MM/DD/YY');
     day2Date.textContent = moment().add(2, 'days').format('MM/DD/YY');
@@ -88,6 +124,13 @@ var DOMUpdate = function(openwmResponse) {
     day5Text2.textContent = "Min: " + openwmResponse.daily[5].temp.min + "°F";
     day5Text3.textContent = "Humidity: " + openwmResponse.daily[5].humidity + "%";
     day5Text4.textContent = "Wind: " + openwmResponse.daily[5].wind_speed + "mph";
+    if (openwmResponse.current.uvi <= 3) {
+        uvImg.setAttribute("src", "./assets/imgs/uvLow.png");
+    } else if (openwmResponse.current.uvi > 7) {
+        uvImg.setAttribute("src", "./assets/imgs/uvHigh.png");
+    } else {
+        uvImg.setAttribute("src", "./assets/imgs/uvMed.png");
+    }
 };
 
 // on load find current location
@@ -110,26 +153,87 @@ function currentLoc() {
             return openwmResponse.json();
         })
         .then(function(openwmResponse) {
-            DOMUpdate(openwmResponse);
+            DOMUpdate(openwmResponse, LatLong.city);
+            console.log(openwmResponse);
         })
     })
 };
+
 currentLoc();
 
-citySearchBtn.addEventListener("click", function () {
+var searchCity = function(city) {
+            fetch (
+            `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=bd6680cf3156c36b1545c11999cd572c`
+        )
+        .then(function(openwmResponse) {
+            return openwmResponse.json();
+        })
+        .then(function(openwmResponse) {
+            console.log(openwmResponse);
+            let cityLat = openwmResponse.coord.lat;
+            let cityLong = openwmResponse.coord.lon;
+            let cityDisplay = openwmResponse.name;
+            console.log(cityLat, cityLong);
+            fetch (
+                `https://api.openweathermap.org/data/2.5/onecall?lat=${cityLat}&lon=${cityLong}&units=imperial&appid=bd6680cf3156c36b1545c11999cd572c`
+            )
+            .then(function(openwmResponse) {
+                return openwmResponse.json();
+            })
+            .then(function(openwmResponse) {
+                console.log(openwmResponse);
+                DOMUpdate(openwmResponse, cityDisplay);
+                saveCityHist(cityDisplay);
+                // searchedCityHistBtns.appendChild(document.createElement("BUTTON"));
+            });
+        });
+    };
+
+citySearchBtn.addEventListener("click", function() {
     let cityQuery = citySearch.value.split(' ');
     if (cityQuery) {
         var city = cityQuery.join("+");
-    }
-    fetch (
-        `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=bd6680cf3156c36b1545c11999cd572c`
-    )
-    .then(function(openwmResponse) {
-        return openwmResponse.json();
-    })
-    .then(function(openwmResponse) {
-        console.log(openwmResponse);
-        DOMUpdate(openwmResponse);
-    });
-    
+    searchCity(city)
+    };
+});
+
+citySearchBtn1.addEventListener("click", function(){
+    var cityHistBtn = citySearchBtn1.textContent.split(' ');
+    var city = cityHistBtn.join("+");
+    searchCity(city);
+});
+citySearchBtn2.addEventListener("click", function(){
+    var cityHistBtn = citySearchBtn2.textContent.split(' ');
+    var city = cityHistBtn.join("+");
+    searchCity(city);
+});
+citySearchBtn3.addEventListener("click", function(){
+    var cityHistBtn = citySearchBtn3.textContent.split(' ');
+    var city = cityHistBtn.join("+");
+    searchCity(city);
+});
+citySearchBtn4.addEventListener("click", function(){
+    var cityHistBtn = citySearchBtn4.textContent.split(' ');
+    var city = cityHistBtn.join("+");
+    searchCity(city);
+});
+citySearchBtn5.addEventListener("click", function(){
+    var cityHistBtn = citySearchBtn5.textContent.split(' ');
+    var city = cityHistBtn.join("+");
+    searchCity(city);
+});
+citySearchBtn6.addEventListener("click", function(){
+    var cityHistBtn = citySearchBtn6.textContent.split(' ');
+    var city = cityHistBtn.join("+");
+    searchCity(city);
+});
+citySearchBtn7.addEventListener("click", function(){
+    var cityHistBtn = citySearchBtn7.textContent.split(' ');
+    var city = cityHistBtn.join("+");
+    searchCity(city);
+});
+citySearchBtn8.addEventListener("click", function(){
+    var cityHistBtn = citySearchBtn8.textContent.split(' ');
+    var city = cityHistBtn.join("+");
+    searchCity(city);
 });
