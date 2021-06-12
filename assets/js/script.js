@@ -183,10 +183,11 @@ var searchCity = function(city) {
     };
 
 citySearchBtn.addEventListener("click", function() {
-    let cityQuery = citySearch.value.split(' ');
+    let cityQuery = citySearch.value;
     if (cityQuery) {
+        cityQuery = citySearch.value.split(' ');
         var city = cityQuery.join("+");
-    searchCity(city)
+        searchCity(city)
     };
 });
 
