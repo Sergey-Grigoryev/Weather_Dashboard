@@ -63,7 +63,7 @@ var citySearchBtns = [citySearchBtn1, citySearchBtn2, citySearchBtn3, citySearch
 
 for (i = 0; i < 8; i++) {
     searchedCityHist.push(localStorage.getItem(i));
-    if (searchedCityHist[i] !== 'undefined') {
+    if (searchedCityHist[i]) {
         citySearchBtns[i].textContent = searchedCityHist[i];
         citySearchBtns[i].style.display = "flex";
     };
@@ -76,8 +76,8 @@ var saveCityHist = function(city) {
     };
     localStorage.clear();
     for (i = 0; i < 8; i++) {
-        localStorage.setItem(i, searchedCityHist[i]);
-        if (searchedCityHist[i] !== 'undefined') {
+        if (searchedCityHist[i]) {
+            localStorage.setItem(i, searchedCityHist[i]);
             citySearchBtns[i].textContent = searchedCityHist[i];
             citySearchBtns[i].style.display = "flex";
         }
@@ -158,7 +158,7 @@ currentLoc();
 
 var searchCity = function(city) {
             fetch (
-            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=bd6680cf3156c36b1545c11999cd572c`
+            `https://api.openweathermap.org/data/2.5/weather?q=${city},us&appid=bd6680cf3156c36b1545c11999cd572c`
         )
         .then(function(openwmResponse) {
             return openwmResponse.json();
@@ -174,6 +174,7 @@ var searchCity = function(city) {
                 return openwmResponse.json();
             })
             .then(function(openwmResponse) {
+                console.log(openwmResponse);
                 DOMUpdate(openwmResponse, cityDisplay);
                 saveCityHist(cityDisplay);
                 // searchedCityHistBtns.appendChild(document.createElement("BUTTON"));
