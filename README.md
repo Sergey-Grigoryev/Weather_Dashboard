@@ -14,5 +14,5 @@
 ### Functions: 
 * API fetchs lon/lat of user's current locatin using IP address.
     * On load, shows currentl locations weather & forcast.
-* User able to search for any city worldwide by name to get weather report and forcast.
+* User able to search for any city located in USA by name to get weather report and forcast.
 * Searched cities are saved and can easily be recalled back to view updated weather.
